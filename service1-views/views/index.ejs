@@ -7,7 +7,7 @@
 </head>
 <body>
     <% for (var i = 0; i < images.length; i++) { %>
-        <img src="<%= "http://localhost:3000"+ images[i] %>" alt="<%= "foto" + i %>" onclick="<%= "javascript:location.href='detail?img="+images[i].slice(1)+"'" %>">
+        <img src="<%= baseUrl + images[i] %>" alt="<%= "foto" + i %>" onclick="<%= "javascript:location.href='detail?img="+images[i].slice(1)+"'" %>">
     <% } %>
 </body>
 </html>

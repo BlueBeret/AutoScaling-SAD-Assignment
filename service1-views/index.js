@@ -24,7 +24,7 @@ app.get('/', (req,res) =>{
       .then(response => response.json())
       .then(result => {
         console.log(result)
-        return res.render('index', {images: result})
+        return res.render('index', {images: result, baseURL: CLIENT_SERVICE_URL});
       })
   } catch (err) {
     console.log(err)
