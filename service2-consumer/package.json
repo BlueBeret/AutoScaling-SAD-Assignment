@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "ejs": "^3.1.7",
+    "exif": "^0.6.0",
     "express": "^4.17.1",
     "multer": "^1.4.4",
     "node-fetch": "^2.6.7",

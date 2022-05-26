@@ -42,9 +42,9 @@ app.post(
   (req, res) => {
     const tempPath = req.file.path;
     const id = crypto.randomBytes(16).toString("hex");
-    const targetPath = path.join(__dirname, "./uploads/"+id+".png");
+    const targetPath = path.join(__dirname, "./uploads/"+id+".jpg");
 
-    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+    if (path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".jpeg") {
       fs.rename(tempPath, targetPath, err => {
         if (err) return handleError(err, res);
 
@@ -60,7 +60,7 @@ app.post(
         res
           .status(403)
           .contentType("text/plain")
-          .end("Only .png files are allowed!");
+          .end("Only .jpg files are allowed!");
       });
     }
   }

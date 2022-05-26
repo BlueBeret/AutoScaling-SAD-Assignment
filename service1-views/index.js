@@ -40,7 +40,8 @@ app.get('/detail', (req, res) => {
     name: img,
     status: "inqueue"
   }
-  imgq.forEach(item => {
+  for (var i = 0; i < imgq.length; i++) {
+    var item = imgq[i]
     if (item.name === img) {
       if (item.status === "inqueue") {
         res.send('Image is waiting to be processed')
@@ -56,7 +57,8 @@ app.get('/detail', (req, res) => {
       }
         
     }
-  })
+  }
+    
   imgq.push(payload)
   res.send('Image is added to queue')
 })
@@ -65,24 +67,34 @@ app.get("/getjob", (req, res) => {
   imgq.forEach(item => {
     if (item.status === "inqueue") {
       item.status = "inprocess"
-      res.send(item)
+      res.json(item)
       return
     }
   })
-  res.send("No job available")
+  res.json("{No job available}")
 })
 
-app.post("/updatejob", (req, res) => { 
-  const img = req.body.img
-  const result = req.body.result
+app.get("/updatejob", (req, res) => { 
+
+  const img = req.query.name
+  const result = req.query.result
   imgq.forEach(item => {
     if (item.name === img) {
       item.status = "done"
       item.result = result
-      res.send("Job updated")
+      res.json("Job updated")
       return
     }
   })
-  res.send("No job found")
+  res.json("No job found")
+})
 
+app.get("/reset", (req, res) => {
+  imgq = []
+  res.json("Queue reset")
+})
+
+
+app.get("/qlist", (req, res) => { 
+  res.json(imgq)
 })
