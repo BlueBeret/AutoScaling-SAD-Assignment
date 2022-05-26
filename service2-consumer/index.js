@@ -36,6 +36,7 @@ async function main() {
 }
 
 function getmetadata(img) {
+  await sleep(3000)
   return new Promise((resolve, reject) => {
     try {
       new ExifImage({ image: img }, function (error, exifData) {
