@@ -1,20 +1,24 @@
 var ExifImage = require('exif').ExifImage;
 const fetch = require('node-fetch');
+
+const CLIENT_SERVICE_URL = "http://localhost:3000";
+const PRODUCER_SERVICE_URL = "http://localhost:3100";
+
 async function main() {
   while (1) {
     try {
-      fetch('http://localhost:3100/getjob')
+      fetch(PRODUCER_SERVICE_URL+'/getjob')
     .then(response => response.json())
         .then(data => {
           if (data.name) {
             console.log('asigning to',data.name)
-            fetch('http://localhost:3000/' + data.name)
+            fetch(CLIENT_SERVICE_URL+"/" + data.name)
               .then(response => response.buffer())
               .then(buffer => {
                 console.log('processing', data.name)
                 getmetadata(buffer).then(exifData => {
                   console.log('send response', data.name)
-                  const payload = "http://localhost:3100/updatejob?name=" + data.name + "&result=" + JSON.stringify(exifData)
+                  const payload = PRODUCER_SERVICE_URL+"/updatejob?name=" + data.name + "&result=" + JSON.stringify(exifData)
                   fetch(payload).then(response => console.log('done', data.name))
                   
                 })

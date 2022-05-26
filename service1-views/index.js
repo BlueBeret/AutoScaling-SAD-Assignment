@@ -7,7 +7,7 @@ const app = express();
 
 app.set("view engine", 'ejs');
 
-
+const CLIENT_SERVICE_URL = "http://localhost:3000";
 
 
 const httpServer = http.createServer(app);
@@ -20,7 +20,7 @@ httpServer.listen(PORT, () => {
 
 app.get('/', (req,res) =>{
   try {
-    fetch("http://localhost:3000/api/getimages")
+    fetch(CLIENT_SERVICE_URL+"/api/getimages")
       .then(response => response.json())
       .then(result => {
         console.log(result)
