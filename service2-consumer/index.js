@@ -39,7 +39,7 @@ async function main() {
   }
 }
 
-function getmetadata(img) {
+async function getmetadata(img) {
   await sleep(3000)
   return new Promise((resolve, reject) => {
     try {
