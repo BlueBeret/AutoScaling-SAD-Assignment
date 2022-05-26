@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Your Shared Photo</title>
+</head>
+<body>
+    <% for (var i = 0; i < images.length; i++) { %>
+        <img src="<%= "http://localhost:3000"+ images[i] %>" alt="<%= "foto" + i %>" onclick="<%= "javascript:location.href='detail?img="+images[i].slice(1)+"'" %>">
+    <% } %>
+</body>
+</html>

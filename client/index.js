@@ -1,12 +1,14 @@
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
+const crypto = require('crypto')
 
 const express = require("express");
 
 const app = express();
 
 app.set("view engine", 'ejs');
+app.use(express.static("uploads"));
 
 const httpServer = http.createServer(app);
 
@@ -39,7 +41,8 @@ app.post(
   upload.single("file" /* name attribute of <file> element in your form */),
   (req, res) => {
     const tempPath = req.file.path;
-    const targetPath = path.join(__dirname, "./uploads/image.png");
+    const id = crypto.randomBytes(16).toString("hex");
+    const targetPath = path.join(__dirname, "./uploads/"+id+".png");
 
     if (path.extname(req.file.originalname).toLowerCase() === ".png") {
       fs.rename(tempPath, targetPath, err => {
@@ -62,3 +65,11 @@ app.post(
     }
   }
 );
+
+app.get("/api/getimages", (req, res) => {
+  fs.readdir("./uploads", (err, files) => {
+    if (err) return handleError(err, res);
+
+    res.json(files.map(file => "/" + file));
+  });
+});
